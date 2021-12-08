@@ -40,6 +40,9 @@ class Post(General):
         related_name='posts'
     )
 
+    class Meta:
+        ordering = ["-date_created"]
+
     def __str__(self):
         return self.title
 
@@ -64,16 +67,25 @@ class Comment(General):
         related_name='comments'
     )
 
+    class Meta:
+        ordering = ["-date_created"]
+
     def __str__(self):
         return 'Comment (%s) for %s' % (self.pk, self.post.title)
 
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
+    owner = models.ForeignKey(
+        User,
+        on_delete=CASCADE,
+        related_name='categories'
+    )
     slug = models.SlugField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "categories"
+        ordering = ["-name"]
 
     def __str__(self):
         return self.name
@@ -88,7 +100,15 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
+    owner = models.ForeignKey(
+        User,
+        on_delete=CASCADE,
+        related_name='tags'
+    )
     slug = models.SlugField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-name"]
 
     def __str__(self):
         return self.name

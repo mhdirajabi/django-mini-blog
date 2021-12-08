@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row my-3">
+        <div class="col-12">
+            <figure>
+                <blockquote class="blockquote">
+                    <p class="h2 text-secondary"><strong>{{post.title}}</strong></p>
+                </blockquote>
+                <figcaption class="blockquote-footer my-2">
+                    منتشر شده در <cite title="{{post.date_created}}">{{post.date_created|timesince}}</cite> قبل توسط {{post.creator}}
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            {% if post.image %}
+            <img src="{{post.image.url}}" class="img-fluid rounded" alt="image post">
+            {% else %}
+            <img src="{% static 'images/no-image.jpg'%}" class="img-fluid rounded" alt="image post">
+            {% endif %}
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-12">
+            <figure class="text-center">
+                <blockquote class="blockqoute">
+                    <p class="lead text-secondary">{{post.content}}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer my-2">
+                    آخرین بروزرسانی <cite title="{{post.last_modified}}">{{post.last_modified|timesince}}</cite>
+                    قبل
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-12">
+            <span class="h4 text-secondary"><strong>{{comments.count}} نظر:</strong></span>
+        </div>
+    </div>
+    {% for comment in comments %}
+    <div class="row my-2">
+        <div class="col-12 p-2">
+            <figure class="p-2 bg-light bg-gradient">
+                <blockquote class="blockqoute">
+                    <p class="lead">{{comment.content}}</p>
+                </blockquote>
+                <figcaption class="blockquote-footer mt-1">
+                    منتشر شده در <cite title="{{comment.date_created}}">{{comment.date_created|timesince}}</cite> قبل توسط {{comment.author}}
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
