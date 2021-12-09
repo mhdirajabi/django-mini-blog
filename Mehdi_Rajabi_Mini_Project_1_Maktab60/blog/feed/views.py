@@ -1,10 +1,13 @@
-# from django.shortcuts import render
 from .models import Post, Category
 from django.views.generic import (
     ListView,
     TemplateView,
-    DetailView
+    DetailView,
+    CreateView,
+    UpdateView
 )
+from .forms import CreatePostForm, UpdatePostForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -27,6 +30,24 @@ class PostDetailView(DetailView):
         post = context["post"]
         context["comments"] = post.comments.all()
         return context
+
+
+class CreatePostView(CreateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = 'feed/create_post.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.save()
+        form.save_m2m()
+        return HttpResponseRedirect(post.get_absolute_url())
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    form_class = UpdatePostForm
+    template_name = 'feed/update_post.html'
 
 
 class CategoryListView(ListView):

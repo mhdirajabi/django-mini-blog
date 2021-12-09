@@ -1,14 +1,23 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.urls import reverse
-from uuslug import slugify
+from django.utils.text import slugify
+from django.utils.crypto import get_random_string
 from django.contrib.auth.models import User
 
 # Create your models here.
 
 
+def unique_slugify(instance, slug):
+    model = instance.__class__
+    unique_slug = slug
+    while model.objects.filter(slug=unique_slug).exists():
+        unique_slug = slug + '-' + get_random_string(length=4)
+    return unique_slug
+
+
 class General(models.Model):
-    content = models.TextField("Content")
+    content = models.TextField("متن")
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -17,27 +26,31 @@ class General(models.Model):
 
 
 class Post(General):
-    title = models.CharField("Post Title", max_length=100)
+    title = models.CharField("عنوان", max_length=100)
     creator = models.ForeignKey(
         User,
         on_delete=CASCADE,
-        related_name="posts"
+        related_name="posts",
+        verbose_name="نویسنده"
     )
     image = models.ImageField(
+        "عکس",
         null=True,
         blank=True,
         upload_to='images/post_images'
     )
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, allow_unicode=True)
     categories = models.ManyToManyField(
         'Category',
         db_table='Post_Categories',
-        related_name='posts'
+        related_name='posts',
+        verbose_name="دسته‌بندی‌ها"
     )
     tags = models.ManyToManyField(
         'Tag',
         db_table='Post_Tags',
-        related_name='posts'
+        related_name='posts',
+        verbose_name="تگ‌ها"
     )
 
     class Meta:
@@ -50,8 +63,11 @@ class Post(General):
         return reverse('post_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        return super(Post, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = unique_slugify(
+                self, slugify(self.title, allow_unicode=True)
+            )
+        return super().save(*args, **kwargs)
 
 
 class Comment(General):
@@ -59,29 +75,32 @@ class Comment(General):
         User,
         on_delete=SET_NULL,
         null=True,
-        related_name="comments"
+        related_name="comments",
+        verbose_name="نویسنده"
     )
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        verbose_name="پست"
     )
 
     class Meta:
         ordering = ["-date_created"]
 
     def __str__(self):
-        return 'Comment (%s) for %s' % (self.pk, self.post.title)
+        return '%s | %s' % (self.content, self.post.title)
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField("نام", max_length=200)
     owner = models.ForeignKey(
         User,
         on_delete=CASCADE,
-        related_name='categories'
+        related_name='categories',
+        verbose_name="سازنده"
     )
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, allow_unicode=True)
 
     class Meta:
         verbose_name_plural = "categories"
@@ -94,18 +113,22 @@ class Category(models.Model):
         return reverse('category_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        return super(Category, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = unique_slugify(
+                self, slugify(self.name, allow_unicode=True)
+            )
+        return super().save(*args, **kwargs)
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField("نام", max_length=100)
     owner = models.ForeignKey(
         User,
         on_delete=CASCADE,
-        related_name='tags'
+        related_name='tags',
+        verbose_name="سازنده"
     )
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, allow_unicode=True)
 
     class Meta:
         ordering = ["-name"]
@@ -117,5 +140,8 @@ class Tag(models.Model):
         return reverse('tag_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        return super(Tag, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = unique_slugify(
+                self, slugify(self.name, allow_unicode=True)
+            )
+        return super().save(*args, **kwargs)

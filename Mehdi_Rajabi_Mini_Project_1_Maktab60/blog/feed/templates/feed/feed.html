@@ -31,7 +31,9 @@
             {% endfor %}
         </div>
         <div class="row">
-            <button type="button" class="btn btn-secondary btn-lg mt-5">پست جدید داری؟</button>
+            <a href="{% url 'create_post' %}"
+                <button type="button" class="btn btn-secondary btn-lg my-5">پست جدید داری؟</button>
+            </a>
         </div>
     </div>
 {% endblock %}
