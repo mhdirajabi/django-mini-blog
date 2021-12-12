@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ورود{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mb-5 mt-3">
+            <div class="col-auto">
+                <p class="h2 text-secondary">ورود به سایت</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="form-group my-3">
+                    <form enctype='multipart/form-data' method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid gap-2 my-5">
+                            <button class="btn btn-outline-secondary" type="submit">ورود</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-start my-3">
+            <div class="col-auto">
+                <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت به خانه</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

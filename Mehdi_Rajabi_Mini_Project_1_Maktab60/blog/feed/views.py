@@ -1,10 +1,12 @@
+from django.urls import reverse_lazy
 from .models import Post, Category
 from django.views.generic import (
     ListView,
     TemplateView,
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 from .forms import CreatePostForm, UpdatePostForm
 from django.http import HttpResponseRedirect
@@ -48,6 +50,12 @@ class UpdatePostView(UpdateView):
     model = Post
     form_class = UpdatePostForm
     template_name = 'feed/update_post.html'
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'feed/delete_post.html'
+    success_url = reverse_lazy('feed')
 
 
 class CategoryListView(ListView):

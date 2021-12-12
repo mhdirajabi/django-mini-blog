@@ -2,7 +2,8 @@ from django.urls import path, re_path
 from .views import (
     CategoryListView, FeedView,
     IndexView, PostDetailView,
-    CreatePostView, UpdatePostView
+    CreatePostView, UpdatePostView,
+    DeletePostView
 )
 
 urlpatterns = [
@@ -20,6 +21,10 @@ urlpatterns = [
     re_path(
         'feed/edit/post/(?P<slug>[-\w]+)/',
         UpdatePostView.as_view(), name='update_post'
+    ),
+    re_path(
+        'feed/remove/post/(?P<slug>[-\w]+)/',
+        DeletePostView.as_view(), name='delete_post'
     ),
     path('categories/', CategoryListView.as_view(), name='category_list'),
     # path('posts/<slug:slug>', views.post_detail_view, name='post_detail'),
