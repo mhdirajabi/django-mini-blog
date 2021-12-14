@@ -15,18 +15,29 @@
                 <div class="form-group my-3">
                     <form enctype='multipart/form-data' method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-grid gap-2 my-5">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">نام کاربری:</span>
+                            <input type="text" class="form-control" 
+                                placeholder="نام کاربری خود را وارد کنید..."
+                                name="username" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">رمز عبور:</span>
+                            <input type="password" class="form-control" 
+                                placeholder="رمز عبور خود را را وارد کنید..."
+                                name="password" required>
+                        </div>
+                        <div class="vstack gap-2 col-md-5 mx-auto mt-5">
                             <button class="btn btn-outline-secondary" type="submit">ورود</button>
+                            <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-start my-3">
+        {% comment %} <div class="row justify-content-start my-3">
             <div class="col-auto">
-                <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت به خانه</a>
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 {% endblock content %}

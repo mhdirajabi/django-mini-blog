@@ -4,37 +4,39 @@
 {% block title %}پست جدید{% endblock title %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center mb-5 mt-3">
-            <div class="col-auto">
-                <p class="h2 text-secondary">افزودن پست جدید</p>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row justify-content-center mb-5 mt-3">
+                <div class="col-auto">
+                    <p class="h2 text-secondary">افزودن پست جدید</p>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="form-group my-3">
-                    <form enctype='multipart/form-data' method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-grid gap-2 my-5">
-                            <a class="btn btn-outline-primary" href="{% url 'feed' %}">دسته‌بندی مورد نظرت رو نمی‌بینی؟ خب
-                                بسازش!</a>
-                        </div>
-                        <div class="d-grid gap-2 my-5">
-                            <a class="btn btn-outline-dark" href="{% url 'feed' %}">تگ مورد نظرت رو نمی‌بینی؟ اینجا میتونی
-                                بسازیش!</a>
-                        </div>
-                        <div class="d-grid gap-2 my-5">
-                            <button class="btn btn-outline-secondary" type="submit">ثبت</button>
-                        </div>
-                    </form>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="form-group my-3">
+                        <form enctype='multipart/form-data' method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="d-grid gap-2 my-5">
+                                <a class="btn btn-outline-primary" href="{% url 'feed' %}">دسته‌بندی مورد نظرت رو نمی‌بینی؟ خب
+                                    بسازش!</a>
+                            </div>
+                            <div class="d-grid gap-2 my-5">
+                                <a class="btn btn-outline-dark" href="{% url 'feed' %}">تگ مورد نظرت رو نمی‌بینی؟ اینجا میتونی
+                                    بسازیش!</a>
+                            </div>
+                            <div class="d-grid gap-2 my-5">
+                                <button class="btn btn-outline-secondary" type="submit">ثبت</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-start my-3">
+                <div class="col-auto">
+                    <a class="btn btn-outline-primary" href="{% url 'feed' %}">بازگشت به فید</a>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-start my-3">
-            <div class="col-auto">
-                <a class="btn btn-outline-primary" href="{% url 'feed' %}">بازگشت به فید</a>
-            </div>
-        </div>
-    </div>
+    {% endif %}
 {% endblock content %}

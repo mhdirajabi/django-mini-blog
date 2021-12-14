@@ -52,14 +52,16 @@
                     </figure>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 mb-5 pb-5">
-                    <a class="btn btn-primary" href="{% url 'update_post' post.slug %}">ویرایش پست</a>
+            {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-6 mb-5 pb-5">
+                        <a class="btn btn-primary" href="{% url 'update_post' post.slug %}">ویرایش پست</a>
+                    </div>
+                    <div class="col-6 mb-5 pb-5 text-end">
+                        <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}">حذف پست</a>
+                    </div>
                 </div>
-                <div class="col-6 mb-5 pb-5 text-end">
-                    <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}">حذف پست</a>
-                </div>
-            </div>
+            {% endif %}
             <div class="row my-3">
                 <div class="col-12">
                     <span class="h4 text-secondary"><strong>{{comments.count}} نظر:</strong></span>

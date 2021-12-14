@@ -31,9 +31,15 @@
             {% endfor %}
         </div>
         <div class="row">
-            <a href="{% url 'create_post' %}"
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_post' %}"
+                    <button type="button" class="btn btn-secondary btn-lg my-5">پست جدید داری؟</button>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}"
                 <button type="button" class="btn btn-secondary btn-lg my-5">پست جدید داری؟</button>
-            </a>
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
