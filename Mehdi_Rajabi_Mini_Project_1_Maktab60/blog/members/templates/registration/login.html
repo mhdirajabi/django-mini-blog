@@ -12,7 +12,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-12">
-                <div class="form-group my-3">
+                <div class="form-group vstack gap-2 col-md-5 mx-auto my-3">
                     <form enctype='multipart/form-data' method="post">
                         {% csrf_token %}
                         <div class="input-group mb-3">
@@ -27,7 +27,15 @@
                                 placeholder="رمز عبور خود را را وارد کنید..."
                                 name="password" required>
                         </div>
-                        <div class="vstack gap-2 col-md-5 mx-auto mt-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <small>حساب کاربری ندارید؟ <a href="{% url 'register' %}">اینجا </a>بسازید.</small>
+                            </div>
+                            <div class="col-6 text-end">
+                                <small><a href="#">رمز عبور خود را فراموش کرده‌اید؟</a></small>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-5">
                             <button class="btn btn-outline-secondary" type="submit">ورود</button>
                             <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت</a>
                         </div>
@@ -35,9 +43,5 @@
                 </div>
             </div>
         </div>
-        {% comment %} <div class="row justify-content-start my-3">
-            <div class="col-auto">
-            </div>
-        </div> {% endcomment %}
     </div>
 {% endblock content %}
