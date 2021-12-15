@@ -93,7 +93,7 @@ class Comment(General):
 
 
 class Category(models.Model):
-    name = models.CharField("نام", max_length=200)
+    name = models.CharField("نام", max_length=200, unique=True)
     owner = models.ForeignKey(
         User,
         on_delete=CASCADE,
@@ -104,7 +104,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
-        ordering = ["-name"]
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -121,7 +121,7 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField("نام", max_length=100)
+    name = models.CharField("نام", max_length=100, unique=True)
     owner = models.ForeignKey(
         User,
         on_delete=CASCADE,
@@ -131,7 +131,7 @@ class Tag(models.Model):
     slug = models.SlugField(null=True, blank=True, allow_unicode=True)
 
     class Meta:
-        ordering = ["-name"]
+        ordering = ["name"]
 
     def __str__(self):
         return self.name

@@ -1,34 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
+{% endblock static_css %}
+
 {% block title %}فید{% endblock title %}
 
 {% block content %}
     <div class="container">
+        <div class="row my-3">
+            <p class="h2 text-secondary">
+                پست‌های اخیر:
+            </p>
+        </div>
         <div class="row justify-content-center my-3">
-            {% for post in post_list %}
-                <div class="col-auto my-2">
-                    <div class="card align-items-center">
-                        {% if post.image %}
-                            <a href="{{post.get_absolute_url}}">
-                                <img src="{{post.image.url}}" class="card-img-top rounded img-fluid"
-                                    alt="image post" style="width: 250px; height: 250px;">
-                            </a>
-                        {% else %}
-                            <a href="{{post.get_absolute_url}}">
-                                <img src="{% static 'images/no-image.jpg'%}"
-                                    class="card-img-top rounded" alt="image post"
-                                    style="width: 250px; height: 250px;">
-                            </a>
-                        {% endif %}
-                        <div class="card-body text-center">
-                            <h4><strong>{{post.title}}</strong></h4>
-                            <hr>
-                            <span class="small">{{post.content|truncatechars:39}}</span>
+            {% if not post_list %}
+                <p class="h3 text-center text-secondary my-5">
+                    <strong>
+                        چقدر خلوت... هیچ پستی نیست!
+                    </strong>
+                </p>
+            {% else %}
+                {% for post in post_list %}
+                    <div class="col-auto my-2">
+                        <div class="card align-items-center">
+                            {% if post.image %}
+                                <a href="{{post.get_absolute_url}}">
+                                    <img src="{{post.image.url}}" class="card-img-top rounded img-fluid"
+                                        alt="image post" style="width: 250px; height: 250px;">
+                                </a>
+                            {% else %}
+                                <a href="{{post.get_absolute_url}}">
+                                    <img src="{% static 'images/no-image.jpg'%}"
+                                        class="card-img-top rounded" alt="image post"
+                                        style="width: 250px; height: 250px;">
+                                </a>
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h4><strong>{{post.title}}</strong></h4>
+                                <hr>
+                                <span class="small">{{post.content|truncatechars:39}}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="row">
             {% if user.is_authenticated %}
@@ -42,4 +59,13 @@
             {% endif %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}
+{% block gtt_button %}
+    <button type="button" class="btn btn-primary btn-floating btn-sm rounded-circle" 
+    id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+{% endblock gtt_button %}
+{% block static_js %}
+    <script type="text/javascript" src="{% static 'js/gtt_button.js' %}"></script>
+{% endblock static_js %}

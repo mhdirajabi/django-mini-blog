@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Category
 
 
 class CreatePostForm(forms.ModelForm):
@@ -48,5 +48,20 @@ class UpdatePostForm(forms.ModelForm):
             }),
             'tags': forms.SelectMultiple(attrs={
                 'class': 'form-control'
+            }),
+        }
+
+
+class CreateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'owner')
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نام دسته‌بندی...'
+            }),
+            'owner': forms.Select(attrs={
+                'class': 'form-control',
             }),
         }

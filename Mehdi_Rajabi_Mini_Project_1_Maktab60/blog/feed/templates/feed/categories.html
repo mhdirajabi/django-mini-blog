@@ -4,26 +4,49 @@
 {% block title %}دسته‌بندی‌ها{% endblock title %}
 
 {% block content %}
-    <div class="container" id="content">
-        <div class="row justify-content-center my-3">
+    <div class="container">
+        <div class="row justify-content-start my-3">
+            <p class="h2 text-primary">
+                همه‌ی دسته‌بندی‌ها:
+            </p>
+        </div>
+        <div class="row justify-content-center my-5">
             {% for category in category_list %}
                 <div class="col-auto my-2">
-                    <div class="card align-items-center" style="width: 12.59rem; max-height: 330px;">
-                        {% comment %} {% if post.image %}
-                            <img src="{{post.image.url}}" class="card-img-top rounded"
-                                alt="image post" style="width: 250px; height: 250px;">
-                        {% else %}
-                            <img src="{% static 'images/no-image.jpg'%}"
-                                class="card-img-top rounded" alt="image post"
-                                style="width: 250px; height: 250px;">
-                        {% endif %} {% endcomment %}
-                        <div class="card-body text-center">
-                            <a href="#" class="category-name"
-                            style="color: rgb(122, 190, 20);">{{category.name}}</a>
-                        </div>
+                    <div class="card align-items-center pt-2 border-primary border-2" style="width: 12.59rem; max-height: 330px;">
+                        <a href="{{category.get_absolute_url}}" class="lead"
+                                style="text-decoration: none;">
+                            {{category.name|truncatechars:100}}
+                            <hr>
+                        </a>
+                        {% if user.is_authenticated %}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6 text-start">
+                                        <a href="#" class="btn btn-sm btn-primary rounded-pill">
+                                            ویرایش
+                                        </a>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <a href="#" class="btn btn-sm btn-danger rounded-pill">
+                                            حذف
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
+        {% if user.is_authenticated %}
+            <div class="row justify-content-start p-5">
+                <a class="btn text-light" href="{% url 'create_category' %}" style="background-color: rgb(76, 0, 255);">
+                    <strong class="lead">
+                    افزودن دسته‌بندی جدید
+                    </strong>
+                </a>
+            </div>
+        {% endif %}
     </div>
-{% endblock %}
+{% endblock content %}

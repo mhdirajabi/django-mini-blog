@@ -8,7 +8,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .forms import CreatePostForm, UpdatePostForm
+from .forms import CreatePostForm, UpdatePostForm, CreateCategoryForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -63,14 +63,20 @@ class CategoryListView(ListView):
     template_name = 'feed/categories.html'
 
 
-# class CategoryDetailView(DetailView):
-#     model = Category
-#     template_name = 'category_detail.html'
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'feed/category_detail.html'
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["posts"] = Post.objects.filter(
-#             categories=context["categories"]
-#         )
-#         context["categories_list"] = Category.objects.all()
-#         return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = Post.objects.filter(
+            categories=context["category"]
+        )
+        return context
+
+
+class CreateCategoryView(CreateView):
+    model = Category
+    form_class = CreateCategoryForm
+    template_name = 'feed/create_category.html'
+    success_url = reverse_lazy('category_list')
