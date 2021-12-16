@@ -17,7 +17,7 @@ def unique_slugify(instance, slug):
 
 
 class General(models.Model):
-    content = models.TextField("متن")
+    content = models.TextField(verbose_name="متن")
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
