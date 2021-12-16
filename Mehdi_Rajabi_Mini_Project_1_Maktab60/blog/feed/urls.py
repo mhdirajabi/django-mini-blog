@@ -5,7 +5,9 @@ from .views import (
     CreatePostView, UpdatePostView,
     DeletePostView, CreateCategoryView,
     UpdateCategoryView, DeleteCategoryView,
-    post_like_view
+    post_like_view, TagListView,
+    TagDetailView, CreateTagView,
+    UpdateTagView, DeleteTagView,
 )
 
 urlpatterns = [
@@ -51,5 +53,24 @@ urlpatterns = [
         'feed/like/post/(?P<slug>[-\w]+)/',
         post_like_view,
         name='post_like'
-    )
+    ),
+    path('feed/tags/', TagListView.as_view(), name='tag_list'),
+    re_path(
+        'feed/tags/(?P<slug>[-\w]+)/',
+        TagDetailView.as_view(),
+        name='tag_detail'
+    ),
+    path(
+        'feed/create-new-tag/',
+        CreateTagView.as_view(),
+        name='create_tag'
+    ),
+    re_path(
+        'feed/edit/tag/(?P<slug>[-\w]+)/',
+        UpdateTagView.as_view(), name='update_tag'
+    ),
+    re_path(
+        'feed/remove/tag/(?P<slug>[-\w]+)/',
+        DeleteTagView.as_view(), name='delete_tag'
+    ),
 ]

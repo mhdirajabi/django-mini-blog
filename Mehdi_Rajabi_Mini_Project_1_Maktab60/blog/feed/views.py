@@ -11,7 +11,8 @@ from django.views.generic import (
 )
 from .forms import (
     CreatePostForm, UpdatePostForm,
-    CreateCategoryForm, UpdateCategoryForm
+    CreateCategoryForm, UpdateCategoryForm,
+    CreateTagForm, UpdateTagForm,
 )
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -121,4 +122,44 @@ class DeleteCategoryView(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'feed/delete_category.html'
     success_url = reverse_lazy('category_list')
+    login_url = '/members/login/'
+
+
+class TagListView(ListView):
+    model = Tag
+    template_name = 'feed/tags.html'
+
+
+class TagDetailView(DetailView):
+    model = Tag
+    template_name = 'feed/tag_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = Post.objects.filter(
+            tags=context["tag"]
+        )
+        return context
+
+
+class CreateTagView(LoginRequiredMixin, CreateView):
+    model = Tag
+    form_class = CreateTagForm
+    template_name = 'feed/create_tag.html'
+    success_url = reverse_lazy('tag_list')
+    login_url = '/members/login/'
+
+
+class UpdateTagView(LoginRequiredMixin, UpdateView):
+    model = Tag
+    form_class = UpdateTagForm
+    template_name = 'feed/update_tag.html'
+    success_url = reverse_lazy('tag_list')
+    login_url = '/members/login/'
+
+
+class DeleteTagView(LoginRequiredMixin, DeleteView):
+    model = Tag
+    template_name = 'feed/delete_tag.html'
+    success_url = reverse_lazy('tag_list')
     login_url = '/members/login/'

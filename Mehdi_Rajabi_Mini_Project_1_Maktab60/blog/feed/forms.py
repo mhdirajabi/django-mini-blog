@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Category, Tag
 
 
 class CreatePostForm(forms.ModelForm):
@@ -72,6 +72,35 @@ class CreateCategoryForm(forms.ModelForm):
 
 
 class UpdateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name',)
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نام جدید...'
+            }),
+        }
+
+
+class CreateTagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ('name', 'owner')
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نام تگ...'
+            }),
+            'owner': forms.TextInput(attrs={
+                'id': 'owner',
+                'value': '',
+                'type': 'hidden'
+            }),
+        }
+
+
+class UpdateTagForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name',)

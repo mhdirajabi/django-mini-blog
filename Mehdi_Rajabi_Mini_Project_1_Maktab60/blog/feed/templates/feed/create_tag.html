@@ -5,32 +5,24 @@
     <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
 {% endblock static_css %}
 
-{% block title %}پست جدید{% endblock title %}
+{% block title %}ساخت تگ جدید{% endblock title %}
 
 {% block content %}
     {% if user.is_authenticated %}
         <div class="container">
             <div class="row justify-content-center mb-5 mt-3">
                 <div class="col-auto">
-                    <p class="h2 text-secondary">افزودن پست جدید</p>
+                    <p class="h2 text-secondary">ساخت تگ جدید</p>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="form-group my-3">
-                        <form enctype='multipart/form-data' method="post">
+                        <form method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <div class="d-grid gap-2 my-5">
-                                <a class="btn btn-outline-primary" href="{% url 'create_category' %}">دسته‌بندی مورد نظرت رو نمی‌بینی؟ خب
-                                    بسازش!</a>
-                            </div>
-                            <div class="d-grid gap-2 my-5">
-                                <a class="btn btn-outline-dark" href="{% url 'create_tag' %}">تگ مورد نظرت رو نمی‌بینی؟ اینجا میتونی
-                                    بسازیش!</a>
-                            </div>
-                            <div class="d-grid gap-2 my-5">
-                                <button class="btn btn-outline-secondary" type="submit">ثبت</button>
+                                <button class="btn btn-outline-secondary" type="submit">ساختن</button>
                             </div>
                         </form>
                     </div>
@@ -38,13 +30,13 @@
             </div>
             <div class="row justify-content-start my-3">
                 <div class="col-auto">
-                    <a class="btn btn-outline-primary" href="{% url 'feed' %}">بازگشت</a>
+                    <a class="btn btn-outline-primary" href="{% url 'tag_list' %}">بازگشت</a>
                 </div>
             </div>
         </div>
         <script>
             var user_id = "{{ user.id }}";
-            document.getElementById("creator").value = user_id;
+            document.getElementById("owner").value = user_id;
         </script>
     {% endif %}
 {% endblock content %}

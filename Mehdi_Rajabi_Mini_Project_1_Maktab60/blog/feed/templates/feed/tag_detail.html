@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
 {% endblock static_css %}
 
-{% block title %}{{category.name}}{% endblock title %}
+{% block title %}{{tag.name}}{% endblock title %}
 
 {% block content %}
     <div class="container">
         <div class="row justify-content-start my-3">
             <p class="h2 text-secondary">
-                پست‌های مربوط به بخش {{category.name}}:
+                پست‌های دارای تگ {{tag.name}}:
             </p>
         </div>
         <div class="row justify-content-center my-3">
