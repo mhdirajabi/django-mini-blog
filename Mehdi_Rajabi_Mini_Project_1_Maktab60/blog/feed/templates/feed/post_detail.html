@@ -66,6 +66,26 @@
                     </figure>
                 </div>
             </div>
+            <div class="row my-3">
+                <ul class="list-inline">
+                    <li class="list-inline-item h5 text-secondary"><strong>تگ‌ ها:</strong></li>
+                    {% if not post.tags.all %}
+                        <li class="list-inline-item">
+                            <em><p class="lead text-secondary">
+                                هیچ تگی نیست!</p>
+                            </em>
+                        </li>
+                    {% else %}
+                        {% for tag in post.tags.all %}
+                        <li class="list-inline-item">
+                            <a class="lead" href="{{tag.get_absolute_url}}" style="text-decoration: none;">
+                                {{tag.name}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            <div>
             {% if user.is_authenticated %}
                 {% if user.id == post.creator.id %}
                     <div class="row">
