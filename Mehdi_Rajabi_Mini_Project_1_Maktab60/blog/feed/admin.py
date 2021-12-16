@@ -7,7 +7,11 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'content', 'slug')
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'owner')
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag)

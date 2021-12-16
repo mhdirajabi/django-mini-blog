@@ -1,5 +1,6 @@
-from django.urls import reverse_lazy
-from .models import Post, Category
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy, reverse
+from .models import Post, Category, Tag
 from django.views.generic import (
     ListView,
     TemplateView,
@@ -8,8 +9,12 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .forms import CreatePostForm, UpdatePostForm, CreateCategoryForm
+from .forms import (
+    CreatePostForm, UpdatePostForm,
+    CreateCategoryForm, UpdateCategoryForm
+)
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -30,14 +35,33 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = context["post"]
+        liked = False
+        if post.likes.filter(id=self.request.user.id).exists():
+            liked = True
         context["comments"] = post.comments.all()
+        context["total_likes"] = post.total_likes()
+        context["liked"] = liked
         return context
 
 
-class CreatePostView(CreateView):
+def post_like_view(request, slug):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'slug': slug}))
+
+
+class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = 'feed/create_post.html'
+    login_url = '/members/login/'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -46,16 +70,18 @@ class CreatePostView(CreateView):
         return HttpResponseRedirect(post.get_absolute_url())
 
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = UpdatePostForm
     template_name = 'feed/update_post.html'
+    login_url = '/members/login/'
 
 
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'feed/delete_post.html'
     success_url = reverse_lazy('feed')
+    login_url = '/members/login/'
 
 
 class CategoryListView(ListView):
@@ -75,8 +101,24 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class CreateCategoryView(CreateView):
+class CreateCategoryView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CreateCategoryForm
     template_name = 'feed/create_category.html'
     success_url = reverse_lazy('category_list')
+    login_url = '/members/login/'
+
+
+class UpdateCategoryView(LoginRequiredMixin, UpdateView):
+    model = Category
+    form_class = UpdateCategoryForm
+    template_name = 'feed/update_category.html'
+    success_url = reverse_lazy('category_list')
+    login_url = '/members/login/'
+
+
+class DeleteCategoryView(LoginRequiredMixin, DeleteView):
+    model = Category
+    template_name = 'feed/delete_category.html'
+    success_url = reverse_lazy('category_list')
+    login_url = '/members/login/'

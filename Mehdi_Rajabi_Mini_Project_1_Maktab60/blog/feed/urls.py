@@ -3,7 +3,9 @@ from .views import (
     CategoryDetailView, CategoryListView, FeedView,
     IndexView, PostDetailView,
     CreatePostView, UpdatePostView,
-    DeletePostView, CreateCategoryView
+    DeletePostView, CreateCategoryView,
+    UpdateCategoryView, DeleteCategoryView,
+    post_like_view
 )
 
 urlpatterns = [
@@ -37,4 +39,17 @@ urlpatterns = [
         CreateCategoryView.as_view(),
         name='create_category'
     ),
+    re_path(
+        'feed/edit/category/(?P<slug>[-\w]+)/',
+        UpdateCategoryView.as_view(), name='update_category'
+    ),
+    re_path(
+        'feed/remove/category/(?P<slug>[-\w]+)/',
+        DeleteCategoryView.as_view(), name='delete_category'
+    ),
+    re_path(
+        'feed/like/post/(?P<slug>[-\w]+)/',
+        post_like_view,
+        name='post_like'
+    )
 ]

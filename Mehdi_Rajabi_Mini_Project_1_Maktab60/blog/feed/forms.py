@@ -15,8 +15,10 @@ class CreatePostForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'متن پستت رو اینجا وارد کن...'
             }),
-            'creator': forms.Select(attrs={
-                'class': 'form-control',
+            'creator': forms.TextInput(attrs={
+                'id': 'creator',
+                'value': '',
+                'type': 'hidden'
             }),
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
@@ -61,7 +63,21 @@ class CreateCategoryForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'نام دسته‌بندی...'
             }),
-            'owner': forms.Select(attrs={
+            'owner': forms.TextInput(attrs={
+                'id': 'owner',
+                'value': '',
+                'type': 'hidden'
+            }),
+        }
+
+
+class UpdateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name',)
+        widgets = {
+            'name': forms.TextInput(attrs={
                 'class': 'form-control',
+                'placeholder': 'نام جدید...'
             }),
         }

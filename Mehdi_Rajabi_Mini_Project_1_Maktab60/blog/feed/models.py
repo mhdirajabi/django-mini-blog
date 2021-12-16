@@ -50,11 +50,21 @@ class Post(General):
         'Tag',
         db_table='Post_Tags',
         related_name='posts',
-        verbose_name="تگ‌ها"
+        verbose_name="تگ‌ها",
+        blank=True,
+    )
+    likes = models.ManyToManyField(
+        User,
+        db_table="Post_likes",
+        related_name="liked_posts",
+        verbose_name="لایک‌ها"
     )
 
     class Meta:
         ordering = ["-date_created"]
+
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title
