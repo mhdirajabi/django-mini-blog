@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row justify-content-center mb-5 mt-3">
                     <div class="col-auto">
-                        <p class="h2 text-secondary">ویرایش پست</p>
+                        <p class="h2 text-light">ویرایش پست</p>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -23,15 +23,15 @@
                                 {% csrf_token %}
                                 {{ form.as_p }}
                                 <div class="d-grid gap-2 my-5">
-                                    <a class="btn btn-outline-primary" href="{% url 'create_category' %}">دسته‌بندی مورد نظرت رو نمی‌بینی؟ خب
+                                    <a class="btn text-light" href="{% url 'create_category' %}" style="background-color: #6f95a4;">دسته‌بندی مورد نظرت رو نمی‌بینی؟ خب
                                         بسازش!</a>
                                 </div>
                                 <div class="d-grid gap-2 my-5">
-                                    <a class="btn btn-outline-dark" href="{% url 'create_tag' %}">تگ مورد نظرت رو نمی‌بینی؟ اینجا میتونی
+                                    <a class="btn text-light" href="{% url 'create_tag' %}" style="background-color: #80cad2;">تگ مورد نظرت رو نمی‌بینی؟ اینجا میتونی
                                         بسازیش!</a>
                                 </div>
                                 <div class="d-grid gap-2 my-5">
-                                    <button class="btn btn-outline-secondary" type="submit">ویرایش</button>
+                                    <button class="btn btn-secondary" type="submit">ویرایش</button>
                                 </div>
                             </form>
                         </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row justify-content-start my-3">
                     <div class="col-auto">
-                        <a class="btn btn-outline-primary" href="{% url 'feed' %}">بازگشت به فید</a>
+                        <a class="btn btn-primary" href="{% url 'feed' %}">بازگشت</a>
                     </div>
                 </div>
             </div>

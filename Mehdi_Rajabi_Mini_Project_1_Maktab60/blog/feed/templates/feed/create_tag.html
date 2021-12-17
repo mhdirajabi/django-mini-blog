@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 mt-3">
                 <div class="col-auto">
-                    <p class="h2 text-secondary">ساخت تگ جدید</p>
+                    <p class="h2 text-light">ساخت تگ جدید</p>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -22,7 +22,7 @@
                             {% csrf_token %}
                             {{ form.as_p }}
                             <div class="d-grid gap-2 my-5">
-                                <button class="btn btn-outline-secondary" type="submit">ساختن</button>
+                                <button class="btn btn-secondary" type="submit">ساختن</button>
                             </div>
                         </form>
                     </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="row justify-content-start my-3">
                 <div class="col-auto">
-                    <a class="btn btn-outline-primary" href="{% url 'tag_list' %}">بازگشت</a>
+                    <a class="btn btn-primary" href="{% url 'tag_list' %}">بازگشت</a>
                 </div>
             </div>
         </div>

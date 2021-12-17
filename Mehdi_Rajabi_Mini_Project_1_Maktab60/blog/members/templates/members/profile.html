@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}پروفایل | {{ profile.user.username }}{% endblock title %}
+
+{% block content %}
+    <div class="card mb-3" style="background-color: #115e7b;">
+        <div class="row g-0">
+            <div class="col-md-2">
+                {% if profile.profile_pic %}
+                    <img src="{{ profile.profile_pic.url }}" class="img-fluid rounded-circle"
+                        alt="profile-pic" style="width: 200px; height: 200px;">
+                {% else %}
+                    <img src="{% static 'images/no-profile-image.png'%}"
+                        class="img-fluid rounded-circle" alt="profile-pic"
+                        style="width: 200px; height: 200px;">
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <div class="card-body text-light">
+                    <h5 class="card-title" style="color: #9bb1b7;">
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                    </h5>
+                    <p class="card-text mb-0">نام کاربری: {{ profile.user.username }}</p>
+                    {% if profile.bio %}
+                        <p class="card-text">بیوگرافی: {{ profile.bio }}</p>
+                    {% else %}
+                        <p class="card-text">
+                            بیوگرافی وارد نشده است. می‌توانید با استفاده از ویرایش پروفایل بیوگرافی خود را وارد کنید.
+                        </p>
+                    {% endif %}
+                    <p class="card-text">
+                        <small style="color: #9bb1b7;">
+                            عضو وبلاگ از {{ profile.user.date_joined | timesince }} پیش
+                        </small>
+                        {% if profile.user.id == user.id %}
+                            <a href="#" class="btn btn-sm text-light"
+                            style="float: left; background-color: #6f95a4;">
+                                ویرایش پروفایل
+                            </a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

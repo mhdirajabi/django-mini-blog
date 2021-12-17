@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row justify-content-center mb-5 mt-3">
             <div class="col-auto">
-                <p class="h2 text-secondary">ثبت‌نام در سایت</p>
+                <p class="h2 text-light">ثبت‌نام در سایت</p>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -21,8 +21,8 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div class="d-grid gap-2 my-5">
-                            <button class="btn btn-outline-secondary" type="submit">ثبت‌نام</button>
-                            <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت</a>
+                            <button class="btn btn-secondary" type="submit">ثبت‌نام</button>
+                            <a class="btn btn-primary" href="{% url 'index' %}">بازگشت</a>
                         </div>
                     </form>
                 </div>

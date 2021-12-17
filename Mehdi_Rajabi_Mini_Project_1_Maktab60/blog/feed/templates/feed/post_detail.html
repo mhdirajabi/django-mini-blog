@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load jformat %}
 
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
@@ -15,16 +16,18 @@
                     <div class="row">
                         <figure>
                             <blockquote class="blockquote">
-                                <p class="h2 text-secondary"><strong>{{post.title}}</strong></p>
+                                <p class="h2" style="color: #3c4c41;"><strong>{{post.title}}</strong></p>
                             </blockquote>
-                            <figcaption class="blockquote-footer my-2">
-                                منتشر شده در <cite title="{{post.date_created}}">{{post.date_created|timesince}}</cite> قبل توسط {{post.creator}}
+                            <figcaption class="blockquote-footer my-2" style="color: #115e7b;">
+                                منتشر شده در <cite title="{{post.date_created|jformat}}">
+                                    {{post.date_created|timesince}}</cite> 
+                                    قبل توسط <a href="{{ post.creator.profile.get_absolute_url }}">{{post.creator}}<a>
                             </figcaption>
                         </figure>
                     <div>
                     <div class="row">
                         <ul class="list-inline">
-                            <li class="list-inline-item h5 text-secondary"><strong>دسته‌بندی‌ها:</strong></li>
+                            <li class="list-inline-item h5" style="color: #3c4c41;"><strong>دسته‌بندی‌ها:</strong></li>
                             {% if not post.categories.all %}
                                 <li class="list-inline-item">
                                     <em><p class="lead text-secondary">
@@ -34,7 +37,7 @@
                             {% else %}
                                 {% for category in post.categories.all %}
                                 <li class="list-inline-item">
-                                    <a class="btn btn-small btn-primary" href="{{category.get_absolute_url}}">
+                                    <a class="btn btn-small rounded-pill text-light" style="background-color: #3c4c41;" href="{{category.get_absolute_url}}">
                                         {{category.name}}
                                     </a>
                                 </li>
@@ -57,10 +60,10 @@
                 <div class="col-12">
                     <figure class="text-center">
                         <blockquote class="blockqoute">
-                            <p class="lead text-secondary">{{post.content}}</p>
+                            <p class="lead" style="color: #3c4c41;">{{post.content}}</p>
                         </blockquote>
-                        <figcaption class="blockquote-footer my-2">
-                            آخرین بروزرسانی <cite title="{{post.last_modified}}">{{post.last_modified|timesince}}</cite>
+                        <figcaption class="blockquote-footer my-2" style="color: #115e7b;">
+                            آخرین بروزرسانی <cite title="{{post.last_modified|jformat}}">{{post.last_modified|timesince}}</cite>
                             قبل
                         </figcaption>
                     </figure>
@@ -68,18 +71,18 @@
             </div>
             <div class="row my-3">
                 <ul class="list-inline">
-                    <li class="list-inline-item h5 text-secondary"><strong>تگ‌ ها:</strong></li>
+                    <li class="list-inline-item h5" style="color: #3c4c41;"><strong>تگ‌ ها:</strong></li>
                     {% if not post.tags.all %}
                         <li class="list-inline-item">
-                            <em><p class="lead text-secondary">
+                            <em><p class="lead" style="color: #3c4c41;">
                                 هیچ تگی نیست!</p>
                             </em>
                         </li>
                     {% else %}
                         {% for tag in post.tags.all %}
                         <li class="list-inline-item">
-                            <a class="lead" href="{{tag.get_absolute_url}}" style="text-decoration: none;">
-                                {{tag.name}}
+                            <a class="lead" href="{{tag.get_absolute_url}}" style="text-decoration: none; color: #0c79a0;">
+                                #{{tag.name}}
                             </a>
                         </li>
                         {% endfor %}
@@ -105,7 +108,7 @@
                             <form action="{% url 'post_like' post.slug%}"
                             method="post">
                                 {% csrf_token %}
-                                <p class="h3 text-secondary">لایک‌ها: <button type="submit" name="post_id" value="{{ post.id }}" 
+                                <p class="h3" style="color: #3c4c41;">لایک‌ها: <button type="submit" name="post_id" value="{{ post.id }}" 
                                     class="btn btn-success position-relative rounded-circle">
                                         <i class="far fa-thumbs-up"></i>
                                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark">
@@ -123,7 +126,7 @@
                             <form action="{% url 'post_like' post.slug%}"
                             method="post">
                                 {% csrf_token %}
-                                <p class="h3 text-secondary">لایک‌ها: <button type="submit" name="post_id" value="{{ post.id }}" 
+                                <p class="h3" style="color: #3c4c41;">لایک‌ها: <button type="submit" name="post_id" value="{{ post.id }}" 
                                     class="btn btn-danger position-relative rounded-circle">
                                         <i class="far fa-thumbs-down"></i>
                                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark">
@@ -139,8 +142,8 @@
             {% else %}
                 <div class="row mb-5">
                     <div class="col-12 text-start">
-                        <p class="h3 text-secondary">لایک‌ها:
-                            <small>برای لایک کردن باید <a href="{% url 'login' %}" style="text-decoration: none;">وارد</a>
+                        <p class="h3" style="color: #3c4c41;">لایک‌ها:
+                            <small style="color: #115e7b;">برای لایک کردن باید <a href="{% url 'login' %}" style="text-decoration: none;">وارد</a>
                                 بشی عزیز.
                             </small>
                         </p>
@@ -149,7 +152,7 @@
             {% endif %}
             {% if not comments %}
                 <div class="row my-3">
-                    <p class="h3 text-center text-secondary my-5">
+                    <p class="h3 text-center my-5" style="color: #115e7b;">
                         <strong>
                             باورت میشه تاحالا یدونه کامنت هم نذاشته کسی! &#128580;
                         </strong>
@@ -158,7 +161,7 @@
             {% else %}
                 <div class="row my-3">
                     <div class="col-12">
-                        <span class="h4 text-secondary"><strong>{{comments.count}} نظر:</strong></span>
+                        <span class="h4" style="color: #3c4c41;"><strong>{{comments.count}} نظر:</strong></span>
                     </div>
                 </div>
                 {% for comment in comments %}

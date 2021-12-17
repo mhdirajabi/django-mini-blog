@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row justify-content-center mb-5 mt-3">
             <div class="col-auto">
-                <p class="h2 text-secondary">ورود به سایت</p>
+                <p class="h2 text-light">ورود به سایت</p>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -29,15 +29,17 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <small>حساب کاربری ندارید؟ <a href="{% url 'register' %}">اینجا </a>بسازید.</small>
+                                <small>
+                                    حساب کاربری ندارید؟ <a href="{% url 'register' %}" style="text-decoration: none;">اینجا </a>بسازید.
+                                </small>
                             </div>
                             <div class="col-6 text-end">
-                                <small><a href="#">رمز عبور خود را فراموش کرده‌اید؟</a></small>
+                                <small><a href="#" style="text-decoration: none;">رمز عبور خود را فراموش کرده‌اید؟</a></small>
                             </div>
                         </div>
                         <div class="d-grid gap-2 mt-5">
-                            <button class="btn btn-outline-secondary" type="submit">ورود</button>
-                            <a class="btn btn-outline-primary" href="{% url 'index' %}">بازگشت</a>
+                            <button class="btn btn-secondary" type="submit">ورود</button>
+                            <a class="btn btn-primary" href="{% url 'index' %}">بازگشت</a>
                         </div>
                     </form>
                 </div>

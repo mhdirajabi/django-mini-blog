@@ -10,15 +10,16 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-start my-3">
-            <p class="h2 text-primary">
+            <p class="h2 text-light">
                 همه‌ی دسته‌بندی‌ها:
             </p>
         </div>
         <div class="row justify-content-center my-5">
             {% for category in category_list %}
                 <div class="col-auto my-2">
-                    <div class="card align-items-center pt-2 border-primary border-2" style="width: 12.59rem; max-height: 330px;">
-                        <a href="{{category.get_absolute_url}}" class="lead"
+                    <div class="card align-items-center pt-2" style="width: 12.59rem; max-height: 330px;
+                    background-color: #115e7b;">
+                        <a href="{{category.get_absolute_url}}" class="lead text-light"
                                 style="text-decoration: none;">
                             {{category.name|truncatechars:100}}
                             <hr>
@@ -47,7 +48,7 @@
         </div>
         {% if user.is_authenticated %}
             <div class="row justify-content-start p-5">
-                <a class="btn text-light" href="{% url 'create_category' %}" style="background-color: rgb(76, 0, 255);">
+                <a class="btn text-light" href="{% url 'create_category' %}" style="background-color: #80cad2;">
                     <strong class="lead">
                     افزودن دسته‌بندی جدید
                     </strong>

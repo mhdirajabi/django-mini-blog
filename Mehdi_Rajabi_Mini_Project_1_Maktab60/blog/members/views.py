@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import SignUpForm, UserEditForm, CustomPasswordChangeForm
+from .forms import SignUpForm, AccountSettingsForm, CustomPasswordChangeForm
+from .models import Profile
 
 # Create your views here.
 
@@ -13,10 +15,17 @@ class UserRegisterationView(CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
 
+    def form_valid(self, form):
+        user = form.save()
+        Profile.objects.create(
+            user=user,
+        )
+        return HttpResponseRedirect(reverse_lazy('login'))
 
-class UserEditView(LoginRequiredMixin, UpdateView):
-    form_class = UserEditForm
-    template_name = 'registration/edit_profile.html'
+
+class AccountSettingsView(LoginRequiredMixin, UpdateView):
+    form_class = AccountSettingsForm
+    template_name = 'registration/account_settings.html'
     success_url = reverse_lazy('index')
     login_url = 'login'
 
@@ -33,3 +42,8 @@ class MyPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 def password_change_success(request):
     return render(request, 'registration/password_success.html', {})
+
+
+class UserProfileView(DetailView):
+    model = Profile
+    template_name = 'members/profile.html'

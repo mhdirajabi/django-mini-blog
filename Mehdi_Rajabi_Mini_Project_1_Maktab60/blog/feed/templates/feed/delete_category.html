@@ -9,17 +9,17 @@
             <div class="container">
                 <div class="row justify-content-center mb-5 mt-3">
                     <div class="col-auto">
-                        <p class="h2 text-secondary">حذف دسته‌بندی</p>
+                        <p class="h2 text-light">حذف دسته‌بندی</p>
                     </div>
                 </div>
                 <div class="row justify-content-start mb-5 mt-3">
                     <div class="col-auto">
-                        <p class="h4 text-dark">حذف {{category.name}}...</p>
+                        <p class="h4 text-light">حذف "{{category.name}}" ...</p>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <p class="h5 text-danger">آیا از حذف این دسته‌بندی اطمینان دارید؟</p>
+                        <p class="h5 text-light">آیا از حذف این دسته‌بندی اطمینان دارید؟</p>
                         <div class="form-group my-3">
                             <form method="post">
                                 {% csrf_token %}
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row justify-content-start my-3">
                     <div class="col-auto">
-                        <a class="btn btn-outline-primary" href="{% url 'category_list' %}">بازگشت</a>
+                        <a class="btn btn-primary" href="{% url 'category_list' %}">بازگشت</a>
                     </div>
                 </div>
             </div>

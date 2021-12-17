@@ -47,7 +47,7 @@ class SignUpForm(UserCreationForm):
         self.fields['last_name'].label = "نام خانوادگی"
 
 
-class UserEditForm(UserChangeForm):
+class AccountSettingsForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -74,7 +74,7 @@ class UserEditForm(UserChangeForm):
         fields = ('username', 'email', 'first_name', 'last_name',)
 
     def __init__(self, *args, **kwargs):
-        super(UserEditForm, self).__init__(*args, **kwargs)
+        super(AccountSettingsForm, self).__init__(*args, **kwargs)
 
         self.fields['username'].label = "نام کاربری"
         self.fields['email'].label = "ایمیل"

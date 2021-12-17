@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_cleanup.apps.CleanupConfig',
     'rest_framework',
+    'django_jalali',
     'members',
     'feed',
 ]
