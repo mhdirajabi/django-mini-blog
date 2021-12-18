@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
    UserRegisterationView, AccountSettingsView,
    MyPasswordChangeView, password_change_success,
-   UserProfileView
+   UserProfileView, EditUserProfileView
 )
 
 urlpatterns = [
@@ -19,4 +19,9 @@ urlpatterns = [
    ),
    path('password-success/', password_change_success, name='password_success'),
    path('<slug:slug>/profile/', UserProfileView.as_view(), name='profile'),
+   path(
+      '<slug:slug>/edit-profile/',
+      EditUserProfileView.as_view(),
+      name='edit_profile'
+   ),
 ]

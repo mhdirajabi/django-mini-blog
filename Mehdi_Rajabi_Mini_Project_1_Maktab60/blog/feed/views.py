@@ -65,7 +65,10 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         post = form.save(commit=False)
         post.save()
         form.save_m2m()
-        return HttpResponseRedirect(post.get_absolute_url())
+        user_profile = post.creator.profile
+        return HttpResponseRedirect(reverse_lazy('profile', kwargs={
+            'slug': user_profile.slug
+        }))
 
 
 class UpdatePostView(LoginRequiredMixin, UpdateView):

@@ -4,7 +4,10 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import SignUpForm, AccountSettingsForm, CustomPasswordChangeForm
+from .forms import (
+    SignUpForm, AccountSettingsForm,
+    CustomPasswordChangeForm, EditUserProfileForm,
+)
 from .models import Profile
 
 # Create your views here.
@@ -14,13 +17,6 @@ class UserRegisterationView(CreateView):
     form_class = SignUpForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
-
-    def form_valid(self, form):
-        user = form.save()
-        Profile.objects.create(
-            user=user,
-        )
-        return HttpResponseRedirect(reverse_lazy('login'))
 
 
 class AccountSettingsView(LoginRequiredMixin, UpdateView):
@@ -47,3 +43,18 @@ def password_change_success(request):
 class UserProfileView(DetailView):
     model = Profile
     template_name = 'members/profile.html'
+
+
+class EditUserProfileView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = EditUserProfileForm
+    template_name = 'members/edit_profile.html'
+    login_url = 'login'
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        profile.save()
+        profile_slug = profile.slug
+        return HttpResponseRedirect(reverse_lazy(
+            'profile',
+            kwargs={'slug': profile_slug}))

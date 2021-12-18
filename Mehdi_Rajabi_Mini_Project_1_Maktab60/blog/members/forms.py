@@ -4,6 +4,7 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
 )
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class SignUpForm(UserCreationForm):
@@ -115,3 +116,18 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         self.fields['old_password'].label = "رمز عبور قبلی"
         self.fields['new_password1'].label = "رمز عبور جدید"
         self.fields['new_password2'].label = "تکرار رمز عبور جدید"
+
+
+class EditUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('profile_pic', 'bio',)
+        widgets = {
+            'profile_pic': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'متن بیوگرافی رو اینجا وارد کن...'
+            }),
+        }
