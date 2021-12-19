@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
+{% endblock static_css %}
+
+{% block title %}پروفایل | {{ profile.user.username }}{% endblock title %}
+
+{% block content %}
+    <div class="card mb-3" style="background-color: #115e7b;">
+        <div class="row g-0">
+            <div class="col-md-2">
+                {% if profile.profile_pic %}
+                    <img src="{{ profile.profile_pic.url }}" class="img-fluid rounded-circle"
+                        alt="profile-pic" style="width: 200px; height: 200px;">
+                {% else %}
+                    <img src="{% static 'images/no-profile-image.png'%}"
+                        class="img-fluid rounded-circle" alt="profile-pic"
+                        style="width: 200px; height: 200px;">
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <div class="card-body text-light">
+                    <h5 class="card-title" style="color: #9bb1b7;">
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                    </h5>
+                    <p class="card-text mb-0">نام کاربری: {{ profile.user.username }}</p>
+                    {% if profile.bio %}
+                        <p class="card-text">بیوگرافی: {{ profile.bio }}</p>
+                    {% elif user.id == profile.user.id %}
+                        <p class="card-text">
+                            بیوگرافی وارد نشده است. می‌توانید با استفاده از ویرایش پروفایل بیوگرافی خود را وارد کنید.
+                        </p>
+                    {% endif %}
+                    <p class="card-text">
+                        <small style="color: #9bb1b7;">
+                            عضو وبلاگ از {{ profile.user.date_joined | timesince }} پیش
+                        </small>
+                        {% if profile.user.id == user.id %}
+                            <a href="{% url 'edit_profile' profile.slug %}" class="btn btn-sm text-light"
+                            style="float: left; background-color: #6f95a4;">
+                                ویرایش پروفایل
+                            </a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-4">
+            <p class="h2 text-light">
+                پست‌های منتشر شده توسط {{ profile.user.username }}:
+            </p>
+        </div>
+        
+        {% if not profile.user.posts.all %}
+            <div class="row justify-content-center mb-5">
+                <div class="col-12">
+                    <p class="h3 text-center text-light my-5">
+                        <strong>
+                            چقدر خلوت... هیچ پستی نیست!	&#128532;
+                        </strong>
+                    </p>
+                </div>
+                <div class="col-12 text-center">
+                    <a href="{% url 'create_post' %}" class="btn rounded-pill text-light" style="background-color: #6f95a4;">
+                        اگه بخوای میتونی اینجا اولین پستت رو منتشر کنی 	&#128522;
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="row justify-content-center mb-5">
+                {% for post in profile.user.posts.all %}
+                    <div class="col-auto my-5">
+                        <div class="card align-items-center">
+                            {% if post.image %}
+                                <a href="{{post.get_absolute_url}}">
+                                    <img src="{{post.image.url}}" class="card-img-top rounded img-fluid"
+                                        alt="image post" style="width: 250px; height: 250px;">
+                                </a>
+                            {% else %}
+                                <a href="{{post.get_absolute_url}}">
+                                    <img src="{% static 'images/no-image.jpg'%}"
+                                        class="card-img-top rounded" alt="image post"
+                                        style="width: 250px; height: 250px;">
+                                </a>
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h4><strong>{{post.title|truncatechars:20}}</strong></h4>
+                                <hr>
+                                <span class="small">{{post.content|truncatechars:35}}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                {% if user.is_authenticated and user.id == profile.user.id %}
+                    <a href="{% url 'create_post' %}" 
+                       class="btn btn-lg my-5 text-light" 
+                       style="background-color: #0c79a0;">
+                        پست جدید داری؟
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
+{% block gtt_button %}
+    <button type="button" class="btn btn-primary btn-floating btn-sm rounded-circle" 
+    id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+{% endblock gtt_button %}
+{% block static_js %}
+    <script type="text/javascript" src="{% static 'js/gtt_button.js' %}"></script>
+{% endblock static_js %}

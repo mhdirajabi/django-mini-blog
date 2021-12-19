@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
+{% endblock static_css %}
+
+{% block title %}دسته‌بندی‌ها{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-start my-3">
+            <p class="h2 text-light">
+                همه‌ی دسته‌بندی‌ها:
+            </p>
+        </div>
+        <div class="row justify-content-center my-5">
+            {% for category in category_list %}
+                <div class="col-auto my-2">
+                    <div class="card align-items-center pt-2" style="width: 12.59rem; max-height: 330px;
+                    background-color: #115e7b;">
+                        <a href="{{category.get_absolute_url}}" class="lead text-light"
+                                style="text-decoration: none;">
+                            {{category.name|truncatechars:100}}
+                            <hr>
+                        </a>
+                        {% if user.is_authenticated %}
+                            {% if user.id == category.owner.id %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6 text-start">
+                                            <a href="{% url 'update_category' category.slug %}" class="btn btn-sm btn-primary rounded-pill">
+                                                ویرایش
+                                            </a>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <a href="{% url 'delete_category' category.slug %}" class="btn btn-sm btn-danger rounded-pill">
+                                                حذف
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if user.is_authenticated %}
+            <div class="row justify-content-start p-5">
+                <a class="btn text-light" href="{% url 'create_category' %}" style="background-color: #80cad2;">
+                    <strong class="lead">
+                    افزودن دسته‌بندی جدید
+                    </strong>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
+{% block gtt_button %}
+    <button type="button" class="btn btn-primary btn-floating btn-sm rounded-circle" 
+    id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+{% endblock gtt_button %}
+{% block static_js %}
+    <script type="text/javascript" src="{% static 'js/gtt_button.js' %}"></script>
+{% endblock static_js %}

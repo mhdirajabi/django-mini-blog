@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'css/gtt_button.css' %}">
+{% endblock static_css %}
+
+{% block title %}ثبت‌نام{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mb-5 mt-3">
+            <div class="col-auto">
+                <p class="h2 text-light">ثبت‌نام در سایت</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="form-group vstack gap-2 col-md-5 mx-auto my-3">
+                    <form enctype='multipart/form-data' method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid gap-2 my-5">
+                            <button class="btn btn-secondary" type="submit">ثبت‌نام</button>
+                            <a class="btn btn-primary" href="{% url 'index' %}">بازگشت</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block gtt_button %}
+    <button type="button" class="btn btn-primary btn-floating btn-sm rounded-circle" 
+    id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+{% endblock gtt_button %}
+{% block static_js %}
+    <script type="text/javascript" src="{% static 'js/gtt_button.js' %}"></script>
+{% endblock static_js %}

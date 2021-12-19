@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ورود{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mb-5 mt-3">
+            <div class="col-auto">
+                <p class="h2 text-light">ورود به سایت</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="form-group vstack gap-2 col-md-5 mx-auto my-3">
+                    <form enctype='multipart/form-data' method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">نام کاربری:</span>
+                            <input type="text" class="form-control" 
+                                placeholder="نام کاربری خود را وارد کنید..."
+                                name="username" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">رمز عبور:</span>
+                            <input type="password" class="form-control" 
+                                placeholder="رمز عبور خود را را وارد کنید..."
+                                name="password" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <small>
+                                    حساب کاربری ندارید؟ <a href="{% url 'register' %}" style="text-decoration: none;">اینجا </a>بسازید.
+                                </small>
+                            </div>
+                            <div class="col-6 text-end">
+                                <small><a href="#" style="text-decoration: none;">رمز عبور خود را فراموش کرده‌اید؟</a></small>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-5">
+                            <button class="btn btn-secondary" type="submit">ورود</button>
+                            <a class="btn btn-primary" href="{% url 'index' %}">بازگشت</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
