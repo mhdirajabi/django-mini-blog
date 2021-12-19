@@ -1,2 +1,4 @@
 blog/blog/.env
 venv
+blog/feed/__pycache__
+blog/blog/__pycache__
