@@ -8,6 +8,7 @@ from .views import (
     post_like_view, TagListView,
     TagDetailView, CreateTagView,
     UpdateTagView, DeleteTagView,
+    search_blog
 )
 
 urlpatterns = [
@@ -73,4 +74,5 @@ urlpatterns = [
         'feed/remove/tag/(?P<slug>[-\w]+)/',
         DeleteTagView.as_view(), name='delete_tag'
     ),
+    path('search/', search_blog, name='search'),
 ]

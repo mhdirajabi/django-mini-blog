@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}نتایج جستجو{% endblock title %}
+
+{% block content %}
+    {% if search %}
+        <div class="container">
+            <div class="col-12">
+                <div class="row my-3">
+                    <p class="h2 text-light">
+                        نتایج جستجو برای {{ search }}:
+                    </p>
+                </div>
+                <div class="row justify-content-center my-5">
+                    {% if not posts %}
+                        <p class="h3 text-center text-light my-5">
+                            <strong>
+                                نتیجه‌ای پیدا نشد...
+                            </strong>
+                        </p>
+                        <a href="{% url 'index' %}" class="btn btn-lg text-light w-50 mx-auto" style="background-color: #115e7b;">
+                            برای بازگشت به صفحه اصلی کلیک کنید
+                        </a>
+                    {% else %}
+                        {% for post in posts %}
+                            <div class="col-auto my-3">
+                                <div class="card align-items-center">
+                                    {% if post.image %}
+                                        <a href="{{post.get_absolute_url}}">
+                                            <img src="{{post.image.url}}" class="card-img-top rounded img-fluid"
+                                                alt="image post" style="width: 250px; height: 250px;">
+                                        </a>
+                                    {% else %}
+                                        <a href="{{post.get_absolute_url}}">
+                                            <img src="{% static 'images/no-image.jpg'%}"
+                                                class="card-img-top rounded" alt="image post"
+                                                style="width: 250px; height: 250px;">
+                                        </a>
+                                    {% endif %}
+                                    <div class="card-body text-center">
+                                        <h4><strong>{{post.title|truncatechars:20}}</strong></h4>
+                                        <hr>
+                                        <span class="small">{{post.content|truncatechars:35}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-12 text-light text-center">
+                    <h2>             	
+                        &#9940; شما اجازه دسترسی به این صفحه را ندارید! &#9940;
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center mt-5">
+                    <a href="{% url 'index' %}" class="btn btn-lg text-light" style="background-color: #115e7b;">
+                        برای بازگشت به صفحه اصلی کلیک کنید
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

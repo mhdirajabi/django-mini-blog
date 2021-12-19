@@ -1,5 +1,5 @@
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin

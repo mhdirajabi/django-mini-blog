@@ -1,11 +1,11 @@
 from django import forms
-from .models import Post, Category, Tag
+from .models import Comment, Post, Category, Tag
 
 
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'content', 'creator', 'image', 'categories', 'tags')
+        fields = ('title', 'content', 'image', 'categories', 'tags')
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -14,11 +14,6 @@ class CreatePostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'متن پستت رو اینجا وارد کن...'
-            }),
-            'creator': forms.TextInput(attrs={
-                'id': 'creator',
-                'value': '',
-                'type': 'hidden'
             }),
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
@@ -109,4 +104,17 @@ class UpdateTagForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'نام جدید...'
             }),
+        }
+
+
+class CreateCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'متن کامنت رو اینجا وارد کن...',
+                'rows': 4
+            })
         }

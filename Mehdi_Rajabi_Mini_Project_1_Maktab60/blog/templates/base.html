@@ -116,8 +116,10 @@
                                 <a class="nav-link text-light p-1" href="{% url 'register' %}">ثبت‌نام</a>
                             </div>
                         {% endif %}
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="جستجو..." aria-label="Search">
+                        <form class="d-flex"method="post" action="{% url 'search' %}">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" name="search"
+                                   placeholder="جستجو..." aria-label="Search">
                             <button class="btn btn-info text-light" type="submit">برو</button>
                         </form>
                     </div>

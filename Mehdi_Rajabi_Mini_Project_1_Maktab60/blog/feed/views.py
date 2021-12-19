@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from .models import Post, Category, Tag
 from django.views.generic import (
@@ -13,8 +13,9 @@ from .forms import (
     CreatePostForm, UpdatePostForm,
     CreateCategoryForm, UpdateCategoryForm,
     CreateTagForm, UpdateTagForm,
+    CreateCommentForm,
 )
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
@@ -39,10 +40,25 @@ class PostDetailView(DetailView):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
+        comment_form = CreateCommentForm()
         context["comments"] = post.comments.all()
         context["total_likes"] = post.total_likes()
         context["liked"] = liked
+        context["comment_form"] = comment_form
         return context
+
+    def post(self, request, *args, **kwargs):
+        comment_form = CreateCommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_form.instance.author = request.user
+            comment_form.instance.post = Post.objects.get(slug=self.kwargs['slug'])
+            comment_form.save()
+            return HttpResponseRedirect(reverse(
+                'post_detail',
+                kwargs={'slug': self.kwargs['slug']}
+            ))
+        else:
+            return HttpResponse(comment_form.errors)
 
 
 def post_like_view(request, slug):
@@ -62,6 +78,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     login_url = '/members/login/'
 
     def form_valid(self, form):
+        form.instance.creator = self.request.user
         post = form.save(commit=False)
         post.save()
         form.save_m2m()
@@ -163,3 +180,18 @@ class DeleteTagView(LoginRequiredMixin, DeleteView):
     template_name = 'feed/delete_tag.html'
     success_url = reverse_lazy('tag_list')
     login_url = '/members/login/'
+
+
+def search_blog(request):
+    if request.method == 'POST':
+        search = request.POST['search']
+        post_title = Post.objects.filter(title__contains=search)
+        post_content = Post.objects.filter(content__contains=search)
+        posts = set(list(post_title) + list(post_content))
+        context = {
+            'search': search,
+            'posts': posts
+        }
+        return render(request, 'feed/search.html', context)
+    else:
+        return render(request, 'feed/search.html', {})

@@ -28,7 +28,7 @@
                     <p class="card-text mb-0">نام کاربری: {{ profile.user.username }}</p>
                     {% if profile.bio %}
                         <p class="card-text">بیوگرافی: {{ profile.bio }}</p>
-                    {% else %}
+                    {% elif user.id == profile.user.id %}
                         <p class="card-text">
                             بیوگرافی وارد نشده است. می‌توانید با استفاده از ویرایش پروفایل بیوگرافی خود را وارد کنید.
                         </p>
@@ -49,19 +49,29 @@
         </div>
     </div>
     <div class="container">
-        <div class="row my-3">
+        <div class="row mt-4">
             <p class="h2 text-light">
                 پست‌های منتشر شده توسط {{ profile.user.username }}:
             </p>
         </div>
-        <div class="row justify-content-center my-3">
-            {% if not profile.user.posts.all %}
-                <p class="h3 text-center text-light my-5">
-                    <strong>
-                        چقدر خلوت... هیچ پستی نیست!	&#128532;
-                    </strong>
-                </p>
-            {% else %}
+        
+        {% if not profile.user.posts.all %}
+            <div class="row justify-content-center mb-5">
+                <div class="col-12">
+                    <p class="h3 text-center text-light my-5">
+                        <strong>
+                            چقدر خلوت... هیچ پستی نیست!	&#128532;
+                        </strong>
+                    </p>
+                </div>
+                <div class="col-12 text-center">
+                    <a href="{% url 'create_post' %}" class="btn rounded-pill text-light" style="background-color: #6f95a4;">
+                        اگه بخوای میتونی اینجا اولین پستت رو منتشر کنی 	&#128522;
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="row justify-content-center mb-5">
                 {% for post in profile.user.posts.all %}
                     <div class="col-auto my-5">
                         <div class="card align-items-center">
@@ -85,8 +95,17 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% endif %}
-        </div>
+            </div>
+            <div class="row">
+                {% if user.is_authenticated and user.id == profile.user.id %}
+                    <a href="{% url 'create_post' %}" 
+                       class="btn btn-lg my-5 text-light" 
+                       style="background-color: #0c79a0;">
+                        پست جدید داری؟
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock content %}
 {% block gtt_button %}
