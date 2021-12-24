@@ -6,3 +6,4 @@ blog/blog/__pycache__
 .vscode
 blog/feed/migrations
 blog/members/migrations
+requirements.txt
