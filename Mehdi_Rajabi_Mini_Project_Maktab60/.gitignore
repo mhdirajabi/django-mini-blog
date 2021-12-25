@@ -8,4 +8,4 @@ blog/feed/migrations
 blog/members/migrations
 requirements.txt
 .idea
-!/blog/db.sqlite3
+blog/db.sqlite3
