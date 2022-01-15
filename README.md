@@ -6,4 +6,4 @@ Just set up a virtual environment and install dependencies!
 
 Here's the ERD:
 
-https://github.com/mhdirajabi/Mini-Blog/blob/main/Mini_Blog/blog/erd.png?raw=true
+![alt text](https://github.com/mhdirajabi/Mini-Blog/blob/main/Mini_Blog/blog/erd.png?raw=true)
