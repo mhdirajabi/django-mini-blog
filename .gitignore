@@ -1,0 +1,6 @@
+mini_blog/blog/blog/__pycache__
+mini_blog/blog/blog/.env
+mini_blog/blog/feed/__pycache__
+mini_blog/blog/feed/migrations/__pycache__
+mini_blog/blog/members/__pycache__
+mini_blog/blog/members/migrations/__pycache__

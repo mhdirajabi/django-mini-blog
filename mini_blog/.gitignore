@@ -1,7 +1,0 @@
-blog/blog/.env
-venv
-blog/blog/__pycache__
-blog/members/__pycache__
-blog/members/migrations/__pycache__
-blog/feed/__pycache__
-blog/feed/migrations/__pycache__
