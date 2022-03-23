@@ -1,4 +1,4 @@
-# Mini-Blog
+# Django-Mini-Blog
 
 A simple yet elegant blog written in python and django
 
