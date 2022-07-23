@@ -1,3 +1,4 @@
+.venv
 mini_blog/blog/blog/__pycache__
 mini_blog/blog/blog/.env
 mini_blog/blog/feed/__pycache__
